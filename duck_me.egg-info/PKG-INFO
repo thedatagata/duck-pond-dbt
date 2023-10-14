@@ -1,0 +1,10 @@
+Metadata-Version: 2.1
+Name: duck-me
+Version: 0.0.0
+Requires-Dist: dagster
+Requires-Dist: dagster-duckdb
+Requires-Dist: pandas
+Requires-Dist: dlt
+Provides-Extra: dev
+Requires-Dist: dagster-webserver; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
