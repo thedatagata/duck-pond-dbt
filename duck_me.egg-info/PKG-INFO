@@ -5,6 +5,10 @@ Requires-Dist: dagster
 Requires-Dist: dagster-duckdb
 Requires-Dist: pandas
 Requires-Dist: dlt
+Requires-Dist: boto3
 Provides-Extra: dev
 Requires-Dist: dagster-webserver; extra == "dev"
 Requires-Dist: pytest; extra == "dev"
+Requires-Dist: localstack; extra == "dev"
+Requires-Dist: awscli; extra == "dev"
+Requires-Dist: awscli-local; extra == "dev"

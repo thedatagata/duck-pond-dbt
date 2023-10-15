@@ -4,7 +4,8 @@ setup(
     name="duck_me",
     packages=find_packages(exclude=["duck_me_tests"]),
     install_requires=[
-        "dagster", 
+        "dagster",
+        "duckdb",
         "dagster-duckdb",
         "pandas",
         "dlt",

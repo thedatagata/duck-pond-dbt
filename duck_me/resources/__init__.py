@@ -1,9 +1,10 @@
 import dlt
 from pathlib import Path
 import boto3
+import duckdb
 from dagster import ConfigurableResource  
 
-db_path = Path(__file__).parent.parent.parent / 'data_warehouse' / 'duck_pond.db'
+# db_path = Path(__file__).parent.parent.parent / 'data_warehouse' / 'duck_pond.db'
 
 from dagster import (
     ConfigurableResource,
@@ -11,14 +12,12 @@ from dagster import (
 
 class DuckPondHose(ConfigurableResource):
     pipeline_name: str
-    dataset_name: str 
-
-    def get_pond_hose(self):
-        return dlt.pipeline(pipeline_name=self.pipeline_name, destination='duckdb', dataset_name=self.dataset_name, credentials=db_path) 
+    dataset_name: str
     
-    def fill_duck_pond(self, table_name, data):
-        pond_hose = self.get_pond_hose()
-        return pond_hose.run(table_name, data)
+    def fill_duck_pond(self, data, table_name):
+        pipeline = dlt.pipeline(pipeline_name=self.pipeline_name, destination='duckdb', dataset_name=self.dataset_name, credentials='data_warehouse/duck_pond.duckdb')
+        info = pipeline.run(data, table_name=table_name, loader_file_format='parquet')
+        return info
         
 class S3(ConfigurableResource):
     access_key: str

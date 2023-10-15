@@ -2,7 +2,11 @@ dagster
 dagster-duckdb
 pandas
 dlt
+boto3
 
 [dev]
 dagster-webserver
 pytest
+localstack
+awscli
+awscli-local
