@@ -1,0 +1,68 @@
+version: 2
+
+sources:
+  - name: pond_water
+    tables: 
+      - name: raw_sessions_fct 
+        description: Each row from each GA File Dump represents a session. The column within that file containing pageview information has been used to create its own table.
+        meta: 
+          dagster: 
+            asset_key: ["pond_sessions"]
+        columns: 
+          - name: user_id
+          - name: session_id
+          - name: session_start_time 
+          - name: session_sequence_number 
+          - name: session_date
+          - name: session_pageview_cnt
+          - name: session_order_cnt
+          - name: session_revenue 
+          - name: session_total_revenue 
+          - name: new_vs_returning
+            identifier: session_new_vs_returning
+          - name: session_time_on_site
+          - name: session_browser
+          - name: session_os 
+          - name: session_is_mobile
+          - name: session_device_category
+          - name: session_source
+          - name: session_medium
+          - name: channel_grouping
+            identifier: session_marketing_channel 
+          - name: session_city
+          - name: session_region
+          - name: session_country
+
+      - name: raw_pageviews_fct
+        description: This table was created by unpacking the pageview column from the sessions table. The original column was named hits and had more information in it. I only extracted page information and if those pages displayed products or not. 
+        meta: 
+          dagster: 
+            asset_key: ["pond_pageviews"]
+        columns:
+          - name: pageview_id
+          - name: pageview_timestamp
+          - name: user_id
+          - name: session_id
+          - name: session_start_time
+          - name: page_title 
+            identifier: pageview_page_title
+          - name: hostname
+            identifier: pageview_host 
+          - name: page_path
+            identifier: pageview_path 
+            description: Each page path is split into parts by the forward slash value. This is the first part of the path coming after the hostname.  
+          - name: page_path_level_1
+            identifier: pageview_path_part_1
+            description: Each page path is split into parts by the forward slash value. This is the second part of the path coming after the first path value.
+          - name: page_path_level_2
+            identifier: pageview_path_part_2 
+            description: Each page path is split into parts by the forward slash value. This is the third part of the path coming after the second path value.
+          - name: page_path_level_3
+            identifier: pageview_path_part_3
+            description: Each page path is split into parts by the forward slash value. This is the fourth part of the path coming after the third path value.
+          - name: page_path_level_4 
+            identifier: pageview_path_part_4
+            description: Each page path is split into parts by the forward slash value. This is the fifth part of the path coming after the fourth path value.
+          - name: total_product_impressions 
+            identifier: pageview_product_impressions
+            description: This is the total number of products displayed on the page.

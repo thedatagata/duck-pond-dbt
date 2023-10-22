@@ -8,6 +8,7 @@ setup(
         "duckdb",
         "dagster-duckdb",
         "pandas",
+        "pyarrow",
         "dlt",
         "dbt-core",
         "dagster-dbt",

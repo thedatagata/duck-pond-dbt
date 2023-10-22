@@ -1,3 +1,9 @@
 duck_me.egg-info
 duck_me_tests
 data_warehouse
+dbt_packages
+target
+profiles.yml
+logs
+tests 
+.user.yml

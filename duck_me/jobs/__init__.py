@@ -13,8 +13,8 @@ fill_pond_config = {
     },
     "ops":{
         "get_swamp_water":{"config":{"Bucket":"data-swamp","Key":"ga_data"}},
-        "fill_pond_sessions":{"config":{"table_name":"sessions"}},
-        "fill_pond_pageviews":{"config":{"table_name":"pageviews"}}
+        "pond_sessions":{"config":{"table_name":"raw_sessions_fct"}},
+        "pond_pageviews":{"config":{"table_name":"raw_pageviews_fct"}}
     }
 }
 
