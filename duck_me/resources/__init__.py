@@ -1,5 +1,5 @@
+from ..constants import duck_pond_path
 import dlt
-from pathlib import Path
 import boto3
 import duckdb
 from dagster import ConfigurableResource  
@@ -7,7 +7,6 @@ from dagster import ConfigurableResource
 from dagster import (
     ConfigurableResource,
 )
-
 
 class DuckPondHose(ConfigurableResource):
     pipeline_name: str

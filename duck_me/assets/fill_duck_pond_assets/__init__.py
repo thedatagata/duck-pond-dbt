@@ -16,7 +16,7 @@ from dagster import (
     get_dagster_logger,
 )
 
-@multi_asset(outs={"sessions_df":AssetOut(), "session_pageviews_df":AssetOut()}, partitions_def=daily_dump_partition)
+@multi_asset(outs={"sessions_df":AssetOut(), "pageviews_df":AssetOut()}, partitions_def=daily_dump_partition)
 def get_swamp_water(context, config: S3Config, s3: S3):
     assert config.Bucket 
     assert config.Key
@@ -27,12 +27,12 @@ def get_swamp_water(context, config: S3Config, s3: S3):
     session_cols = ['channel_grouping','session_date','user_id','session_id','session_sequence_number','session_start_time','session_browser','session_os','session_is_mobile','session_device_category','session_country','session_city','session_region','session_source','session_medium','session_revenue','session_total_revenue','session_order_cnt','session_pageview_cnt','session_time_on_site','new_vs_returning','session_landing_screen','session_exit_screen']
     pageview_cols = ['user_id','session_id','session_start_time','session_pageviews']
     sessions_df = ga_dump_df[session_cols]
-    session_pageviews_df = ga_dump_df[pageview_cols]
+    pageviews_df = ga_dump_df[pageview_cols]
     logger.info(f"Sessions DF Shape: {sessions_df.shape}")
-    logger.info(f"Session Pageviews DF Shape: {session_pageviews_df.shape}")
-    return sessions_df, session_pageviews_df
+    logger.info(f"Session Pageviews DF Shape: {pageviews_df.shape}")
+    return sessions_df, pageviews_df
 
-@asset(ins={"sessions_df":AssetIn("sessions_df")}, partitions_def=daily_dump_partition)
+@asset(key="pond_sessions", ins={"sessions_df":AssetIn("sessions_df")}, partitions_def=daily_dump_partition)
 def fill_pond_sessions(sessions_df, config: DuckPondConfig, pond_hose: DuckPondHose):
     assert config.table_name
     assert pond_hose
@@ -43,14 +43,14 @@ def fill_pond_sessions(sessions_df, config: DuckPondConfig, pond_hose: DuckPondH
     logger.info(results)
 
 
-@asset(ins={"session_pageviews_df":AssetIn("session_pageviews_df")}, partitions_def=daily_dump_partition)
-def fill_pond_pageviews(session_pageviews_df, config: DuckPondConfig, pond_hose: DuckPondHose):
+@asset(key="pond_pageviews", ins={"pageviews_df":AssetIn("pageviews_df")}, partitions_def=daily_dump_partition)
+def fill_pond_pageviews(pageviews_df, config: DuckPondConfig, pond_hose: DuckPondHose):
     assert config.table_name
     assert pond_hose 
     logger = get_dagster_logger()
 
     db = duckdb.connect(database=':memory:', read_only=False)
-    db.register('session_pvs', session_pageviews_df)
+    db.register('session_pvs', pageviews_df)
     qry = """
         SELECT 
             sp.user_id,

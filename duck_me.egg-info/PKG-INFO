@@ -5,6 +5,7 @@ Requires-Dist: dagster
 Requires-Dist: duckdb
 Requires-Dist: dagster-duckdb
 Requires-Dist: pandas
+Requires-Dist: pyarrow
 Requires-Dist: dlt
 Requires-Dist: dbt-core
 Requires-Dist: dagster-dbt
