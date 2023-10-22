@@ -1,13 +1,15 @@
 version: 2
 
 sources:
-  - name: pond_water
+  - name: dagster 
     tables: 
-      - name: raw_sessions_fct 
+      - name: pond_sessions
         description: Each row from each GA File Dump represents a session. The column within that file containing pageview information has been used to create its own table.
         meta: 
           dagster: 
-            asset_key: ["pond_sessions"]
+            asset_key: ["src_view_sessions_fct"]
+            auto_materialize_policy: 
+              type: eager 
         columns: 
           - name: user_id
           - name: session_id
@@ -33,11 +35,13 @@ sources:
           - name: session_region
           - name: session_country
 
-      - name: raw_pageviews_fct
+      - name: pond_pageviews
         description: This table was created by unpacking the pageview column from the sessions table. The original column was named hits and had more information in it. I only extracted page information and if those pages displayed products or not. 
         meta: 
           dagster: 
-            asset_key: ["pond_pageviews"]
+            asset_key: ["src_view_pageviews_fct"]
+            auto_materialize_policy: 
+              type: eager 
         columns:
           - name: pageview_id
           - name: pageview_timestamp
