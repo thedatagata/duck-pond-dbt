@@ -1,0 +1,9 @@
+duck_pond_fountain:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '../data_warehouse/duckpond.db'
+      extensions:
+        - parquet
+    
