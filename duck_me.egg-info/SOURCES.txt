@@ -9,6 +9,7 @@ duck_me.egg-info/dependency_links.txt
 duck_me.egg-info/requires.txt
 duck_me.egg-info/top_level.txt
 duck_me/assets/__init__.py
+duck_me/assets/fill_duck_pond_assets/__init__.py
 duck_me/configs/__init__.py
 duck_me/environment/__init__.py
 duck_me/jobs/__init__.py
