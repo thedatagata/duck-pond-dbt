@@ -1,7 +1,12 @@
 dagster
+duckdb
 dagster-duckdb
 pandas
 dlt
+dbt-core
+dagster-dbt
+dbt-duckdb
+malloy
 boto3
 
 [dev]
