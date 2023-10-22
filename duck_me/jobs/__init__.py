@@ -4,6 +4,13 @@ from ..partitions import daily_dump_partition
 from dagster import define_asset_job
 
 fill_pond_config = {
+    "execution": {
+        "config": {
+            "multiprocess":{
+                "max_concurrent": 1
+            }
+        }
+    },
     "ops":{
         "get_swamp_water":{"config":{"Bucket":"data-swamp","Key":"ga_data"}},
         "fill_pond_sessions":{"config":{"table_name":"sessions"}},

@@ -3,7 +3,7 @@ from .environment import local_S3
 from .resources import S3, DuckPondHose 
 from .schedules import fill_duck_pond_schedule 
 
-from dagster import Definitions, load_assets_from_modules 
+from dagster import Definitions, load_assets_from_modules
 
 defs = Definitions(
     assets=[*load_source_data_assets], 

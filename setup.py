@@ -9,6 +9,8 @@ setup(
         "dagster-duckdb",
         "pandas",
         "dlt",
+        "dbt-core", 
+        "malloy",
         "boto3",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest", "localstack", "awscli", "awscli-local"]},

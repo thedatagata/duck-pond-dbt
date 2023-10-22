@@ -4,19 +4,23 @@ import boto3
 import duckdb
 from dagster import ConfigurableResource  
 
-# db_path = Path(__file__).parent.parent.parent / 'data_warehouse' / 'duck_pond.db'
-
 from dagster import (
     ConfigurableResource,
 )
 
+
 class DuckPondHose(ConfigurableResource):
     pipeline_name: str
     dataset_name: str
+
+    def get_duckpond_conn(self):
+        return duckdb.connect(database='data_warehouse/duckpond.db', read_only=False)
     
     def fill_duck_pond(self, data, table_name):
-        pipeline = dlt.pipeline(pipeline_name=self.pipeline_name, destination='duckdb', dataset_name=self.dataset_name, credentials='data_warehouse/duck_pond.duckdb')
+        duckpond_db = self.get_duckpond_conn()
+        pipeline = dlt.pipeline(pipeline_name=self.pipeline_name, destination='duckdb', dataset_name=self.dataset_name, credentials=duckpond_db)
         info = pipeline.run(data, table_name=table_name, loader_file_format='parquet')
+        duckpond_db.close()
         return info
         
 class S3(ConfigurableResource):
