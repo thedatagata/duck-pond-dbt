@@ -4,10 +4,6 @@ import boto3
 import duckdb
 from dagster import ConfigurableResource  
 
-from dagster import (
-    ConfigurableResource,
-)
-
 class DuckPondHose(ConfigurableResource):
     pipeline_name: str
     dataset_name: str
